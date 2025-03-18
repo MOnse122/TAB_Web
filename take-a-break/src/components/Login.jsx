@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { Box, TextField, Button, Typography, Container, Paper, List, ListItem, ListItemText, ThemeProvider, createTheme } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import '../estilos/estilos.css';
+import { Cursor } from 'mongoose';
 
 // Definimos un tema personalizado para Material-UI
 const theme = createTheme({
@@ -48,8 +51,9 @@ const theme = createTheme({
 export { theme };
 
 const Login = () => {
+  const navigate = useNavigate();
   // Estado para manejar los valores del formulario
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ correo: '', contraseña: '' });
   const [errors, setErrors] = useState({}); // Estado para manejar errores de validación
   const [emailValidations, setEmailValidations] = useState({
     startLetter: false,
@@ -101,27 +105,46 @@ const Login = () => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.email) {
-      newErrors.email = 'El correo electrónico es requerido';
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Por favor ingrese un correo electrónico válido';
+    if (!formData.correo) {
+      newErrors.correo = 'El correo electrónico es requerido';
+    } else if (!validateEmail(formData.correo)) {
+      newErrors.correo = 'Por favor ingrese un correo electrónico válido';
     }
 
-    if (!formData.password) {
-      newErrors.password = 'La contraseña es requerida';
-    } else if (!validatePassword(formData.password)) {
-      newErrors.password = 'La contraseña no cumple con los requisitos de seguridad';
+    if (!formData.contraseña) {
+      newErrors.contraseña = 'La contraseña es requerida';
+    } else if (!validatePassword(formData.contraseña)) {
+      newErrors.contraseña = 'La contraseña no cumple con los requisitos de seguridad';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Manejo del evento de envío del formulario
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Form submitted:', formData);
+      try {
+        const response = await fetch('http://localhost:5000/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          // Aquí puedes manejar el token y redirigir al usuario
+          navigate('/');
+        } else {
+          const data = await response.json();
+          setErrors({ submit: data.message || 'Error en el inicio de sesión' });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setErrors({ submit: 'Error de conexión con el servidor' });
+      }
     }
   };
 
@@ -132,24 +155,37 @@ const Login = () => {
       ...prevData,
       [name]: value
     }));
-    if (name === 'email') {
+    if (name === 'correo') {
       validateEmail(value);
-    } else if (name === 'password') {
+    } else if (name === 'contraseña') {
       validatePassword(value);
     }
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'background.default', padding: 3 }}>
+      <Box className="contenedor-principal">
         <Container maxWidth="xs">
-          <Paper elevation={0} sx={{ padding: { xs: 3, sm: 4 }, backgroundColor: 'background.paper' }}>
-            <Typography component="h1" variant="h3" align="center" gutterBottom sx={{ color: 'primary.main', fontWeight: 700 }}> Take a Break </Typography>
-            <Typography component="h2" variant="h5" align="center" gutterBottom sx={{ color: 'text.primary', fontWeight: 500, marginBottom: 3 }}> Iniciar Sesión </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate>
-              <TextField margin="normal" required fullWidth id="email" label="Correo Electrónico" name="email" autoComplete="email" value={formData.email} onChange={handleChange} error={!!errors.email} helperText={errors.email} sx={{ mb: 2 }} />
-              {formData.email && (
-                <List dense sx={{ mb: 2, color: 'text.secondary' }}>
+          <Paper elevation={0} className="papel">
+            <Typography component="h1" variant="h3" align="center" gutterBottom className="titulo-principal"> Take a Break </Typography>
+            <Typography component="h2" variant="h5" align="center" gutterBottom className="subtitulo"> Iniciar Sesión </Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
+              <TextField 
+                margin="normal" 
+                required 
+                fullWidth 
+                id="correo" 
+                label="Correo Electrónico" 
+                name="correo" 
+                autoComplete="email" 
+                value={formData.correo} 
+                onChange={handleChange} 
+                error={!!errors.correo} 
+                helperText={errors.correo} 
+                className="campo-texto" 
+              />
+              {formData.correo && (
+                <List dense className="lista-validacion">
                   {Object.entries(emailValidations).map(([key, valid]) => (
                     !valid && <ListItem key={key}><ListItemText primary={{
                       startLetter: "Debe comenzar con una letra",
@@ -163,9 +199,22 @@ const Login = () => {
                   ))}
                 </List>
               )}
-              <TextField margin="normal" required fullWidth name="password" label="Contraseña" type="password" id="password" value={formData.password} onChange={handleChange} error={!!errors.password} helperText={errors.password} sx={{ mb: 2 }} />
-              {formData.password && (
-                <List dense sx={{ mb: 2, color: 'text.secondary' }}>
+              <TextField 
+                margin="normal" 
+                required 
+                fullWidth 
+                name="contraseña" 
+                label="Contraseña" 
+                type="password" 
+                id="contraseña" 
+                value={formData.contraseña} 
+                onChange={handleChange} 
+                error={!!errors.contraseña} 
+                helperText={errors.contraseña} 
+                className="campo-texto" 
+              />
+              {formData.contraseña && (
+                <List dense className="lista-validacion">
                   {Object.entries(passwordValidations).map(([key, valid]) => (
                     !valid && <ListItem key={key}><ListItemText primary={{
                       minLength: "Debe tener al menos 8 caracteres",
@@ -177,8 +226,35 @@ const Login = () => {
                   ))}
                 </List>
               )}
-              <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 2, mb: 2 }}>Iniciar Sesión</Button>
+              <Button 
+                type="submit" 
+                fullWidth 
+                variant="contained" 
+                color="primary" 
+                className="boton"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Iniciar Sesión
+              </Button>
             </Box>
+            <Typography variant="body2" color="text.secondary">
+                  ¿Aun no te has registrado?
+                  <Button
+                    component="a"
+                    href="/register"
+                    variant="text"
+                    sx={{
+                      ml: 1,
+                      color: 'primary.main',
+                      textDecoration: 'none',
+                      '&:hover': {
+                        cursor: 'pointer'
+                      }
+                    }}
+                  >
+                    Regístrate
+                  </Button>
+                </Typography>
           </Paper>
         </Container>
       </Box>

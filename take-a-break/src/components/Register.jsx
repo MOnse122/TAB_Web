@@ -190,15 +190,15 @@ const Register = () => {
                 fullWidth
                 variant="contained"
                 color="primary"
-                sx={{ mt: 3, mb: 2 }}
+                className="boton"
               >
                 Registrarse
               </Button>
               <Button
                 fullWidth
                 variant="text"
-                onClick={() => navigate('/')}
-                sx={{ mt: 1 }}
+                onClick={() => navigate('/login')}
+                className="boton boton-secundario"
               >
                 ¿Ya tienes una cuenta? Inicia sesión
               </Button>
