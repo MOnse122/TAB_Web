@@ -46,7 +46,7 @@ export default function Home() {
           borderRadius: '50%',
           opacity: 1,
           transform: 'translate(-50%, -50%)',
-          animation: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite'
+          animation: 'ping 4s cubic-bezier(0, 0, 0.2, 1) infinite'
         }} />
 
         {/* Contenido lado izquierdo */}
@@ -76,7 +76,7 @@ export default function Home() {
             textAlign: 'center', // Centrar texto
             mb: 4 // Añadir margen inferior
           }}>
-            Tu espacio para relajarte
+            Tu momento para respirar y avanzar
             <Box component="span" sx={{ color: 'primary.main', fontSize: '2rem' }}>●●●</Box>
           </Typography>
           <img 

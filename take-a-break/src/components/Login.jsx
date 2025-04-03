@@ -135,8 +135,7 @@ const Login = () => {
 
         if (response.ok) {
           const data = await response.json();
-          // Aquí puedes manejar el token y redirigir al usuario
-          navigate('/');
+          navigate('/chat');
         } else {
           const data = await response.json();
           setErrors({ submit: data.message || 'Error en el inicio de sesión' });
