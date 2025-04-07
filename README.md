@@ -1,5 +1,4 @@
 Take a Break
-
 Este es un nuevo proyecto React, creado con Vite y configurado con las mejores prácticas de desarrollo.
 
 Comenzando
