@@ -1,12 +1,96 @@
-# React + Vite
+# Take a Break
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es un nuevo proyecto React, creado con Vite y configurado con las mejores prácticas de desarrollo.
 
-Currently, two official plugins are available:
+## Comenzando
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Nota: Asegúrate de tener Node.js instalado en tu sistema antes de continuar.
 
-## Expanding the ESLint configuration
+### Paso 1: Instalación
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Primero, instala todas las dependencias del proyecto:
+
+```bash
+# Usando npm
+npm install
+
+# O usando Yarn
+yarn install
+```
+
+### Paso 2: Iniciar el servidor de desarrollo
+
+Para iniciar el servidor de desarrollo, ejecuta uno de los siguientes comandos:
+
+```bash
+# Usando npm
+npm run dev
+
+# O usando Yarn
+yarn dev
+```
+
+Si todo está configurado correctamente, verás un mensaje con la URL donde se está ejecutando la aplicación (generalmente http://localhost:5173).
+
+### Paso 3: Construir para producción
+
+Cuando estés listo para construir la versión de producción:
+
+```bash
+# Usando npm
+npm run build
+
+# O usando Yarn
+yarn build
+```
+
+## Estructura del Proyecto
+
+- `/src` - Código fuente de la aplicación
+  - `/assets` - Recursos estáticos (imágenes, fuentes, etc.)
+  - `/components` - Componentes React reutilizables
+  - `/estilos` - Archivos de estilos
+  - `App.jsx` - Componente principal de la aplicación
+  - `main.jsx` - Punto de entrada de la aplicación
+
+## Scripts Disponibles
+
+- `dev` - Inicia el servidor de desarrollo
+- `build` - Construye la aplicación para producción
+- `preview` - Previsualiza la versión de producción localmente
+- `lint` - Ejecuta el linter para verificar el código
+
+## Tecnologías Principales
+
+- React 18
+- Vite
+- Material-UI
+- React Router DOM
+- ESLint
+
+## Contribuir
+
+1. Haz fork del proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Haz commit de tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## Solución de Problemas
+
+Si encuentras algún problema durante la instalación o ejecución:
+
+1. Asegúrate de tener la versión correcta de Node.js instalada
+2. Elimina la carpeta `node_modules` y el archivo `package-lock.json`
+3. Ejecuta `npm install` nuevamente
+4. Si el problema persiste, verifica los logs de error
+
+## Recursos Adicionales
+
+- [Documentación de React](https://reactjs.org/)
+- [Documentación de Vite](https://vitejs.dev/)
+- [Guía de Material-UI](https://mui.com/)
+
+## Licencia
+
+Distribuido bajo la Licencia MIT. Ver `LICENSE` para más información.
